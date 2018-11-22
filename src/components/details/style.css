@@ -1,0 +1,71 @@
+.movieModalContainer {
+    padding: 10px;
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    align-items: center;
+    min-width: 350px;
+    height: auto;
+    font-size: 14px;
+}
+.modalHeaderContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.modalPropertyContainer {
+    overflow: auto;
+    width: 95%;
+    height: 100%;
+    text-align: left;
+}
+.modalProperyTable {
+    width: 100%;
+}
+.modalAvgRatingContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.closeButton {
+    width: 25px;
+    height: 25px;
+    display: inline-flex;
+}
+tr {
+    margin: 25x 0px 25px 0px;
+}
+
+.commentListContainer {
+    width: 100%;
+    overflow: auto;
+    margin: 10px 5px 10px 5px;
+
+}
+.commentContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    border-top: 1px solid #8c8c8c;
+    border-bottom: 1px solid #8c8c8c;
+}
+
+.commentBodyContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    padding: 10px;
+}
+.commentHighlightedText {
+    font-weight: 600;
+    font-size: 15px;
+}
+.commentItalicText {
+    font-style: italic;
+    font-size: 11px;
+}
+

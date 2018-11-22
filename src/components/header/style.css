@@ -1,0 +1,11 @@
+.headerStyle {
+    background-color: #364046;
+    background-image: url("/images/feature.jpg");
+    border-bottom: 1px solid #919090;
+  }
+  .headerTitle {
+    color: #7c531e;
+  }
+  .headerLead {
+    color: #a6a6a6;
+  }

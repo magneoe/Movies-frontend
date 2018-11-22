@@ -1,0 +1,49 @@
+
+.tileContainer {
+    padding: 10px;
+    margin: 5px;
+    display: flex;
+    box-shadow: 5px 5px 4px #4d4d4d;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: nowrap;
+    border: 1px solid #4d4d4d;
+    width: 350px;
+    height: auto;
+    font-size: 12px;
+}
+
+.tilePropertyContainer {
+    overflow: hidden;
+    max-width: 55%;
+    height: 100%;
+    text-align: left;
+}
+
+.tileHeader {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.tileTitle {
+    font-size: 15px;
+}
+.tileTitle:hover {
+    cursor: pointer;
+}
+.posterContainer {
+    overflow: hidden;
+}
+.posterContainer:hover {
+    cursor: pointer;
+}
+.posterImg {
+    width: 150px;
+    padding: 10px;
+}
+.ratingContainer {  
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; 
+}
