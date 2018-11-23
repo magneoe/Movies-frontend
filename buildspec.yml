@@ -10,4 +10,4 @@ phases:
       - npm run build
   post_build:
     commands:
-     - aws s3 sync --delete . "s3://<your-static-website-bucket>"
+     - aws s3 sync --delete . "s3://movies-db-frontend-bucket1.s3-website.us-east-2.amazonaws.com"
