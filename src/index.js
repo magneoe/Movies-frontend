@@ -17,6 +17,9 @@ import {DIRECTION_ASC, SORT_OPTIONS} from './pages/home/actions';
 
 import * as serviceWorker from './serviceWorker';
 
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config()
+}
 
 const INITIAL_STATE = {
     loginReducer: {

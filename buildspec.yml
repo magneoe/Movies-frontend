@@ -10,4 +10,4 @@ phases:
       - npm run build
   post_build:
     commands:
-     - aws s3 cp build s3://movies-db-frontend-bucket1 --recursive 
+     - npm deploy 

@@ -4,7 +4,7 @@ export const SESSION_ID = 'JSESSIONID';
  * axios instance
  */
 let instance = axios.create({
-    baseURL: `/api`
+    baseURL: `${process.env.REACT_APP_API_URL}/api`
   })
 
   // request header
