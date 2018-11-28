@@ -4,13 +4,14 @@ export const SESSION_ID = 'JSESSIONID';
  * axios instance
  */
 let instance = axios.create({
-    baseURL: `${process.env.REACT_APP_API_URL}/api`
+    baseURL: `/api`
   })
 
   // request header
   instance.interceptors.request.use((config) => {
     const apiToken = sessionStorage.getItem(SESSION_ID);
-    if(apiToken){
+    if(apiToken !== undefined && apiToken !== null){
+      console.log("API token:", apiToken);
       config.headers = { 'Authorization': apiToken }
     }
     return config
@@ -18,4 +19,4 @@ let instance = axios.create({
     return Promise.reject(error)
   })
 
-  export const http = instance;
+  export const http = instance; 

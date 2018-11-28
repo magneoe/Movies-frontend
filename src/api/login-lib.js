@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const performLogin = (formData) => {
-    return axios.post(`${process.env.REACT_APP_API_URL}/login`, {
+    return axios.post(`/login`, {
         email: formData.get('email'),
         password: formData.get('password')
         },
