@@ -43,7 +43,8 @@ export const loginEpic = actions$ =>
         ofType(LOGIN),
         mergeMap(action => from(performLogin(action.formData)).pipe(
             map(result => loginSuccess(result)),
-            concat(of(push('./')))
+            concat(of(push('./'))),
+            catchError(error => of(loginFailure(error)))
         )),
         catchError(error => of(loginFailure(error)))
     );

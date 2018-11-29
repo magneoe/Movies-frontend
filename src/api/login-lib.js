@@ -1,16 +1,14 @@
 import axios from 'axios';
 
 export const performLogin = (formData) => {
-    return axios.post(`/login`, {
+      return axios.post(`${process.env.REACT_APP_API_URL}/login`, {
         email: formData.get('email'),
         password: formData.get('password')
         },
         {
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'text/plain'
             }
         
-    }).then(result => {
-        return result;
-    }).catch(error => Promise.reject(error));
+    }).then(result => { return result }).catch(error => Promise.reject(error)); 
 }
