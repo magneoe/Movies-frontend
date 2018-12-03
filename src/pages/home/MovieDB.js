@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import { loadMovies, vote, loadRating, loadComments, SORT_OPTIONS } from './actions';
 import { PageSort, PageInfo, MovieList } from '../../components';
-import MovieModal from '../../components/details/MovieModal';
+import MovieModal from '../details/MovieModal';
 import './style.css';
 
 class MovieDB extends Component {
@@ -59,12 +59,12 @@ class MovieDB extends Component {
         const movies = movieData.content || [];
 
         return (
-            <div>
+            <div style={{width: '100%'}}>
                 <PageInfo onPrev={this.onPrev}
                     onNext={this.onNext}
                     currentPage={movieData.number}
                     totalPages={movieData.totalPages}
-                    numberOfElements={movieData.numberOfElements} />
+                    numberOfElements={movieData.numberOfElements} /> 
                 <PageSort
                     defaultSortOption={sort}
                     defaultDirection={direction}
@@ -72,7 +72,7 @@ class MovieDB extends Component {
                     onChangedSortOption={this.onChangedSortOption}
                 />
                 <div className="movieListContainer">
-                    {
+                    { 
                         loading ?
                             <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
                             :

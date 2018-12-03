@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 
-class PageSort extends Component {
-
-    render(){
-        const {defaultSortOption, sortOptions, onChangedSortOption} = this.props;
+export const PageSort = ({defaultSortOption, sortOptions, onChangedSortOption}) => {
+    
         const optionView = sortOptions.map(option =>
             <option key={option} value={option}>
                 {option.charAt(0).toUpperCase() + option.substring(1)}
@@ -17,7 +15,4 @@ class PageSort extends Component {
             </select>
         </div>
         );
-    }
 }
-
-export {PageSort};

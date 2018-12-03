@@ -1,49 +1,67 @@
-
-.tileContainer {
+.tileContainerGrid {
+    display: grid;
+    grid-template-areas: 
+    'header header'
+    'info-cell poster'
+    'info-cell poster'
+    'info-cell poster'
+    'info-cell poster'
+    'info-cell poster'
+    'info-cell poster';
+    grid-gap: 10px;
     padding: 10px;
-    margin: 5px;
-    display: flex;
     box-shadow: 5px 5px 4px #4d4d4d;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: nowrap;
     border: 1px solid #4d4d4d;
     width: 350px;
     height: auto;
     font-size: 12px;
 }
-
-.tilePropertyContainer {
-    overflow: hidden;
-    max-width: 55%;
-    height: 100%;
+/* Grid areas */
+.posterArea {
+    grid-area: poster;
+}
+.posterArea:hover {
+    cursor: pointer;
+}
+.infoArea {
+    grid-area: info-cell;
+}
+.headerArea {
+    grid-area: header;
     text-align: left;
+    padding-left: 10px;
 }
 
+/* Grid setup for info container properties */
+.infoAreaContainerGrid { 
+    display: grid;
+    grid-template-columns: '100%';
+    padding: 10px;
+    height: auto;
+}
+.infoCellEntry {
+    margin: 3px 0px 5px 3px;
+}
+
+/* Div info cell content styling */
 .tileHeader {
     font-size: 13px;
     font-weight: bold;
 }
-
 .tileTitle {
     font-size: 15px;
 }
 .tileTitle:hover {
     cursor: pointer;
 }
-.posterContainer {
-    overflow: hidden;
-}
-.posterContainer:hover {
-    cursor: pointer;
-}
 .posterImg {
     width: 150px;
     padding: 10px;
 }
-.ratingContainer {  
+.ratingContainer {
+    align-self: flex-end;  
     display: flex;
     flex-direction: row;
     justify-content: space-between; 
+    margin-bottom: 0px;
 }
