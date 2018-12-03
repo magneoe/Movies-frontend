@@ -4,13 +4,14 @@ import StarRatingComponent from 'react-star-rating-component';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { PageInfo } from '../';
-import { vote, loadComments, postComment, loadRating } from '../../pages/home/actions';
+import { PageInfo, MovieTileEntry, CommentForm, CommentList } from '../../components';
+import { vote, loadComments, postComment, loadRating } from '../home/actions';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
 
 Modal.setAppElement('#root')
 
+//Modal window spesific styles
 const customStyles = {
     content: {
         backgroundColor: '#364046',
@@ -100,22 +101,30 @@ class MovieModal extends Component {
         const { modalIsOpen, movieId, closeModal } = this.props;
 
         const movie = this.getMovieById(movieId);
-        const { year, posterUrl, duration, averageRating, createdDate, releaseDate, plot } = movie || {};
+        const { genres, actors, year, posterUrl, duration, averageRating, createdDate, releaseDate, plot } = movie || {};
         const commentEntry = this.props.comments.find(entry => entry.movieId === movieId) || {};
         const commentData = commentEntry.data || {};
         const commentList = commentData.content || [];
 
-        const genres = movie.genres || [];
-        const actors = movie.actors || [];
-
         const userRatings = this.props.userRatings || [];
         const currentRating = userRatings.find(userRating => userRating.movieId === movieId) || { rating: 0 };
 
-        const genreView = genres.map(genre => genre.name).join(', ');
-        const actorsView = actors.map(actor => actor.name).join(', ');
-
-
         const { number, totalPages, numberOfElements } = this.getPageInfo(movieId);
+
+        const genresString = (genres || []).map(genre => genre.name).join(', ');
+        const actorsString = (actors || []).map(actor => actor.name).join(', ');
+        const entries = 
+        [
+            {titleString: "Year", data: year || ''},
+            {titleString: "Created date", data: createdDate || ''},
+            {titleString: "Release date", data: releaseDate || ''},
+            {titleString:"Duration", data: duration || ''},
+            {titleString:"Genres", data: genresString || ''},
+            {titleString:"Actors", data: actorsString || ''},
+            {titleString: "Plot", data: plot || ''},
+        ];
+        let index = 0;
+        const tableRows = entries.map(d => <MovieTileEntry key={index++} titleString={d.titleString} data={d.data}/>);
         return (
             <div>
                 <Modal
@@ -124,78 +133,36 @@ class MovieModal extends Component {
                     style={customStyles}
                     overlayClassName=""
                 >
-                    <div className="modalHeaderContainer">
+                    <div className="headerContainer">
                         <h2 style={{ display: 'inline-flex' }}>{movie.title}</h2>
                         <button className="closeButton" onClick={closeModal}>X</button>
                     </div>
-                    <div className="movieModalContainer">
+                    <div className="container">
                         <div className="posterContainer">
                             <img alt="Movie poster" src={posterUrl} className="posterImg" />
                         </div>
-                        <div className="modalPropertyContainer">
-                            <table className="modalProperyTable">
-                                <tbody>
-                                    <tr>
-                                        <td><span className="tileHeader">Year:</span></td>
-                                        <td>{year}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><span className="tileHeader">Created date:</span></td>
-                                        <td>{createdDate}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><span className="tileHeader">Release date:</span></td>
-                                        <td>{releaseDate}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><span className="tileHeader">Duration:</span></td>
-                                        <td>{duration} mins</td>
-                                    </tr>
-                                    <tr>
-                                        <td><span className="tileHeader">Genres:</span></td>
-                                        <td>{genreView}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><span className="tileHeader">Actors:</span></td>
-                                        <td>{actorsView}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colSpan="2"><span className="tileHeader">Avg. rating:</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td colSpan="2">
-                                            <div className="modalAvgRatingContainer">
-                                                <StarRatingComponent
-                                                    name="avgRating"
-                                                    value={averageRating} /* number of selected icon (`0` - none, `1` - first) */
-                                                    starCount={10} /* number of icons in rating, default `5` */
-                                                    emptyStarColor="#e6e6e6" /* color of non-selected icons, default `#333` */
-                                                    editing={false} /* is component available for editing, default `true` */
-                                                />
-                                                <span style={{ marginLeft: '5px' }}>({averageRating}/10)</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><span className="tileHeader">Plot:</span></td>
-                                        <td>{plot}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colSpan="2"><span className="tileHeader">You rated this movie:</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td colSpan="2">{userRatingView(currentRating, this.onVote, movie, this.props.user)}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div className="propertyContainer">
+                            {tableRows}
+                            <div className="avgRatingContainer">
+                                   <StarRatingComponent
+                                    name="avgRating"
+                                    value={averageRating || 0} 
+                                    starCount={10} 
+                                    emptyStarColor="#e6e6e6" 
+                                    editing={false} 
+                                   />
+                                   <span>({averageRating || 0}/10)</span>
+                            </div>
+                            <span className="tileHeader">You rated this movie:</span>
+                                   {userRatingView(currentRating, this.onVote, movie, this.props.user)}
                         </div>
                         <span className="tileHeader" style={{ margin: '10px' }}>Comments:</span>
                         {number === 0 && <div style={{ alignSelf: 'flex-start' }}>
                             <span>Post a comment:</span>
-                            {newCommentView(this.onPostComment, this.props.user)}
+                            <CommentForm onPostComment={this.onPostComment} user={this.props.user}/>
                         </div>}
-                        <div className="commentListContainer">
-                            {commentView(commentList)}
+                        <div className="commentList"> 
+                            <CommentList commentList={commentList}/>
                         </div>
                         <PageInfo onPrev={this.onPrev} onNext={this.onNext} currentPage={number} totalPages={totalPages} numberOfElements={numberOfElements} />
                     </div>
@@ -205,46 +172,6 @@ class MovieModal extends Component {
     }
 }
 
-const commentView = (commentList) =>
-    commentList.map((entry, index) => {
-        const author = entry.author || {};
-        return (
-            <div key={index} className="commentContainer">
-                <div className="commentBodyContainer">
-                    <div className="commentHighlightedText">{author.name || ''} {author.lastname || ''}</div>
-                    <div className="commentItalicText">{entry.created || ''}</div>
-                </div>
-                <div className="commentBodyContainer">
-                    <div className="commentHighlightedText">{entry.title || ''}</div>
-                    <div>{entry.comment}</div>
-                </div>
-            </div>
-        );
-    });
-const newCommentView = (onPostComment, user) => {
-    if (user && user.sessionId) {
-        return (
-            <div>
-                <form method="POST" name="newCommentForm" id="newCommentForm">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td><input style={{ width: '100%' }} type="text" name="title" id="title" placeholder="Title" /></td>
-                            </tr>
-                            <tr>
-                                <td><textarea name="comment" id="comment" rows="5" maxLength="150" placeholder="Comment" /></td>
-                            </tr>
-                            <tr>
-                                <td><input type="submit"
-                                    name="submitComment" value="Post comment" onClick={onPostComment} /></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </form>
-            </div>);
-    }
-    return (<div><p>Log in to post a comment</p></div>);
-}
 const userRatingView = (currentRating, onVote, movie, user) => {
     if (user && user.sessionId && currentRating) {
         return (

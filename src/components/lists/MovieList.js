@@ -14,5 +14,5 @@ export const MovieList = ({ movies, onClick }) => (
         }
         )}
     </div>
-);
+    );
 

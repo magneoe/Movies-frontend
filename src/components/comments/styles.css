@@ -1,0 +1,39 @@
+
+.commentListContainer {
+    display: grid;
+    grid-template-areas: 
+    'author title title'
+    'author commentBody commentBody'
+    'author commentBody commentBody'
+    'author commentBody commentBody';
+    grid-gap: 5px;
+    border-top: 1px solid #8c8c8c;
+    border-bottom: 1px solid #8c8c8c;
+    margin: 10px 5px 10px 5px;
+    text-align: left;
+} 
+.commentListAuthorContainer {
+    grid-area: author;
+}
+.commentListTextContainer {
+    grid-area: commentBody;
+}
+.commentListTitleContainer {
+    grid-area: title;
+}
+.commentHighlightedText {
+    font-weight: 600;
+    font-size: 15px;
+}
+.commentItalicText {
+    font-style: italic;
+    font-size: 11px;
+}
+
+.commentFormContainer {
+    display: grid;
+    grid-template-columns: auto; 
+}
+.commentFormRow {
+    padding: 5px;
+}

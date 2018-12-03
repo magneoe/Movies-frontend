@@ -1,0 +1,43 @@
+/*MovieModal styles*/
+.container {
+    padding: 10px;
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-width: 350px;
+    height: auto;
+    font-size: 14px;
+}
+.headerContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.propertyContainer {
+    overflow: auto;
+    width: 95%;
+    height: 100%;
+    text-align: left;
+}
+.posterContainer {
+    align-self: center;
+}
+.avgRatingContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.closeButton {
+    width: 25px;
+    height: 25px;
+    display: inline-flex;
+}
+.commentList {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+

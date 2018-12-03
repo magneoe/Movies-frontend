@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 
-export const PageSort = (props) => {
-
-        const {defaultSortOption, sortOptions, onChangedSortOption} = props;
+export const PageSort = ({defaultSortOption, sortOptions, onChangedSortOption}) => {
+    
         const optionView = sortOptions.map(option =>
             <option key={option} value={option}>
                 {option.charAt(0).toUpperCase() + option.substring(1)}
