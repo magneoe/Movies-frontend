@@ -1,7 +1,5 @@
 import React from 'react';
-import ConnectedMovieDB, { mapStateToProps, MovieDB } from '../MovieDB';
-import ConnectedMovieModal from '../../details/MovieModal';
-import TestRenderer from 'react-test-renderer';
+
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
 
@@ -10,49 +8,54 @@ import {expect as expectChai} from 'chai';
 import Enzyme, { shallow} from 'enzyme';
 import sinon from 'sinon';
 
-// create any initial state needed
+import ConnectedMovieDB, { mapStateToProps, MovieDB } from '../MovieDB';
+import ConnectedMovieModal from '../../details/MovieModal';
+
 let initialState; 
-// here it is possible to pass in any middleware if needed into //configureStore
+// pass in any middleware if needed into //configureStore
 let mockStore = configureStore();
 let store;
 
-beforeAll(() =>{
-    Enzyme.configure({ adapter: new Adapter(), disableLifecycleMethods: true })
+beforeAll(() => {
+    Enzyme.configure({ adapter: new Adapter(), disableLifecycleMethods: true });
+    store = mockStore(initialState);
 });
 
 beforeEach(() => {
-    initialState = {};
+    store.clearActions();
+
+    initialState =  {
+        movieReducer: {
+            loading: false,
+            comments: [],
+            requestConfig: {
+                size: 5,
+                direction: 0,
+                sort: 'title'
+            },
+            movieData: {
+                content: [
+                    {
+                        id: 7,
+                        title: 'Coming to America',
+                    }]
+            }
+        }
+    };
 });
 
 describe("MovieDB component", () => {
     describe("MapStateToProps", () => {
         it("Should map state to props correctly", () => {
-            const appState = {
-                movieReducer: {
-                    loading: false,
-                    comments: [],
-                    requestConfig: {
-                        size: 5,
-                        direction: 0,
-                        sort: 'title'
-                    },
-                    movieData: {
-                        content: [
-                            {
-                                id: 7,
-                                title: 'Coming to America',
-                            }]
-                    }
-                }
-            };
+            
             const expectedProps = {
-                requestConfig: appState.movieReducer.requestConfig,
-                movieData: appState.movieReducer.movieData,
-                loading: appState.movieReducer.loading,
+                requestConfig: initialState.movieReducer.requestConfig,
+                movieData: initialState.movieReducer.movieData,
+                loading: initialState.movieReducer.loading,
                 userRatings: [],
                 comments: []
             };
-            const mappedProps = mapStateToProps(appState);
+            const mappedProps = mapStateToProps(initialState);
 
             expect(mappedProps).toEqual(expectedProps);
         });
@@ -77,8 +80,9 @@ describe("MovieDB component", () => {
         it("Should render successfully", () => {
             store = mockStore(initialState);
 
-            const wrapper = shallow(<MovieDB />);
-            
+            let spy = sinon.spy();
+            const wrapper = shallow(<MovieDB actions={{loadMovies: spy}}/>, {disableLifecycleMethods: false});
+            expectChai(spy.callCount).to.equal(1);
             expect(wrapper).toMatchSnapshot();
         });
 

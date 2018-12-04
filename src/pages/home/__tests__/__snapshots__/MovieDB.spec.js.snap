@@ -3,7 +3,13 @@
 exports[`MovieDB component The display unit Should render successfully 1`] = `
 ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
-  Symbol(enzyme.__unrendered__): <MovieDB />,
+  Symbol(enzyme.__unrendered__): <MovieDB
+    actions={
+      Object {
+        "loadMovies": [Function],
+      }
+    }
+  />,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
     "getNode": [Function],
@@ -266,7 +272,7 @@ ShallowWrapper {
         },
       },
     },
-    "disableLifecycleMethods": true,
+    "disableLifecycleMethods": false,
   },
 }
 `;
