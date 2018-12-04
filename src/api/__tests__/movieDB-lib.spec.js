@@ -3,11 +3,9 @@ import moxios from 'moxios';
 
 import {
     getMoviesApi,
-    voteMovieApi,
     getAllActorsApi,
     getRatingApi,
     getCommentsApi,
-    postCommentApi
 } from '../movieDB-lib';
 import { http } from '../httpConfig';
 
@@ -162,7 +160,7 @@ describe("MovieDB-lib", () => {
             let request = moxios.requests.mostRecent();
             request.respondWith({
                 status: 200,
-                response: {...actorsList}
+                response: {...actorsList} 
             });
         });
     });

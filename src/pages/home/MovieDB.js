@@ -7,7 +7,7 @@ import { PageSort, PageInfo, MovieList } from '../../components';
 import MovieModal from '../details/MovieModal';
 import './style.css';
 
-class MovieDB extends Component {
+export class MovieDB extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -59,12 +59,12 @@ class MovieDB extends Component {
         const movies = movieData.content || [];
 
         return (
-            <div style={{width: '100%'}}>
+            <div style={{ width: '100%' }}>
                 <PageInfo onPrev={this.onPrev}
                     onNext={this.onNext}
                     currentPage={movieData.number}
                     totalPages={movieData.totalPages}
-                    numberOfElements={movieData.numberOfElements} /> 
+                    numberOfElements={movieData.numberOfElements} />
                 <PageSort
                     defaultSortOption={sort}
                     defaultDirection={direction}
@@ -72,7 +72,7 @@ class MovieDB extends Component {
                     onChangedSortOption={this.onChangedSortOption}
                 />
                 <div className="movieListContainer">
-                    { 
+                    {
                         loading ?
                             <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
                             :
@@ -88,15 +88,20 @@ class MovieDB extends Component {
         );
     }
 }
+export const mapStateToProps = (state) => {
+    const {movieReducer} = state || {};
+    const {requestConfig, movieData, loading, userRatings, comments} = movieReducer || {};
+    return {
+        requestConfig: requestConfig || {},
+        movieData: movieData || {},
+        loading: loading || false,
+        userRatings: userRatings || [],
+        comments: comments || []
+    }
+};
 
 export default connect(
-    (state) => ({
-        requestConfig: state.movieReducer.requestConfig,
-        movieData: state.movieReducer.movieData,
-        loading: state.movieReducer.loading,
-        userRatings: state.movieReducer.userRatings || [],
-        comments: state.movieReducer.comments
-    }),
+    mapStateToProps,
     (dispatch) => ({
         actions: bindActionCreators(Object.assign({},
             { loadMovies, vote, loadRating, loadComments }), dispatch)

@@ -1,0 +1,272 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MovieDB component The display unit Should render successfully 1`] = `
+ShallowWrapper {
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <MovieDB />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateError": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <PageInfo
+          currentPage={0}
+          numberOfElements={0}
+          onNext={[Function]}
+          onPrev={[Function]}
+          totalPages={0}
+        />,
+        <PageSort
+          onChangedSortOption={[Function]}
+          sortOptions={
+            Array [
+              "title",
+              "year",
+              "duration",
+            ]
+          }
+        />,
+        <div
+          className="movieListContainer"
+        >
+          <MovieList
+            movies={Array []}
+            onClick={[Function]}
+          />
+        </div>,
+        <Connect(MovieModal)
+          closeModal={[Function]}
+          modalIsOpen={false}
+          movieId={null}
+        />,
+      ],
+      "style": Object {
+        "width": "100%",
+      },
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "currentPage": 0,
+          "numberOfElements": 0,
+          "onNext": [Function],
+          "onPrev": [Function],
+          "totalPages": 0,
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "defaultDirection": undefined,
+          "defaultSortOption": undefined,
+          "onChangedSortOption": [Function],
+          "sortOptions": Array [
+            "title",
+            "year",
+            "duration",
+          ],
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": <MovieList
+            movies={Array []}
+            onClick={[Function]}
+          />,
+          "className": "movieListContainer",
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "movies": Array [],
+            "onClick": [Function],
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        "type": "div",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "closeModal": [Function],
+          "modalIsOpen": false,
+          "movieId": null,
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <PageInfo
+            currentPage={0}
+            numberOfElements={0}
+            onNext={[Function]}
+            onPrev={[Function]}
+            totalPages={0}
+          />,
+          <PageSort
+            onChangedSortOption={[Function]}
+            sortOptions={
+              Array [
+                "title",
+                "year",
+                "duration",
+              ]
+            }
+          />,
+          <div
+            className="movieListContainer"
+          >
+            <MovieList
+              movies={Array []}
+              onClick={[Function]}
+            />
+          </div>,
+          <Connect(MovieModal)
+            closeModal={[Function]}
+            modalIsOpen={false}
+            movieId={null}
+          />,
+        ],
+        "style": Object {
+          "width": "100%",
+        },
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "currentPage": 0,
+            "numberOfElements": 0,
+            "onNext": [Function],
+            "onPrev": [Function],
+            "totalPages": 0,
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "defaultDirection": undefined,
+            "defaultSortOption": undefined,
+            "onChangedSortOption": [Function],
+            "sortOptions": Array [
+              "title",
+              "year",
+              "duration",
+            ],
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <MovieList
+              movies={Array []}
+              onClick={[Function]}
+            />,
+            "className": "movieListContainer",
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "movies": Array [],
+              "onClick": [Function],
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          "type": "div",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "closeModal": [Function],
+            "modalIsOpen": false,
+            "movieId": null,
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+        "lifecycles": Object {
+          "componentDidUpdate": Object {
+            "onSetState": true,
+          },
+          "getDerivedStateFromProps": true,
+          "getSnapshotBeforeUpdate": true,
+          "setState": Object {
+            "skipsComponentDidUpdateOnNullish": true,
+          },
+        },
+      },
+    },
+    "disableLifecycleMethods": true,
+  },
+}
+`;

@@ -9,7 +9,6 @@ import { vote, loadComments, postComment, loadRating } from '../home/actions';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
 
-Modal.setAppElement('#root')
 
 //Modal window spesific styles
 const customStyles = {
@@ -33,6 +32,9 @@ class MovieModal extends Component {
 
     constructor(props) {
         super(props);
+    }
+    componentDidMount(){
+        Modal.setAppElement('#root');
     }
     /*
     * Should trigger rerendering whenever the
@@ -190,16 +192,22 @@ const userRatingView = (currentRating, onVote, movie, user) => {
     }
     return (<div><p>Log in to vote this movie</p></div>)
 }
+export const mapStateToProps = (state) => {
+    const {movieReducer, loginReducer} = state || {};
+    const {requestConfig, movieData, loading, userRatings, comments} = movieReducer || {};
+    const {user} = loginReducer || {};
+    return {
+        requestConfig: requestConfig,
+        movieData: movieData || {},
+        loading: loading,
+        userRatings: userRatings || [],
+        comments: comments || [],
+        user: user || {},
+    }
+}
 
 export default connect(
-    (state) => ({
-        requestConfig: state.movieReducer.requestConfig,
-        movieData: state.movieReducer.movieData || {},
-        loading: state.movieReducer.loading,
-        userRatings: state.movieReducer.userRatings || [],
-        comments: state.movieReducer.comments || [],
-        user: state.loginReducer.user,
-    }),
+    mapStateToProps,
     (dispatch) => ({
         actions: bindActionCreators(Object.assign({},
             { vote, loadComments, postComment, loadRating }), dispatch)
