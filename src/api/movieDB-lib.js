@@ -3,7 +3,7 @@ import { http } from './httpConfig';
 
 const getMoviesApi = (page, size, sort, direction) => {
     return http.get('/movies/getAll', {
-        params: {
+        params: { 
             size,
             page,
             sort,
@@ -18,12 +18,12 @@ const getCommentsApi = (movieId, page, size) => {
         params: {
             movieId,
             size,
-            page
+            page 
         }
     }).then(result => {
         return { movieId, data: result.data };
     }).catch(error => Promise.reject(error));
-}
+} 
 const postCommentApi = (formData, movieId) => {
     return http.post('/movies/submitComment', {
         title: formData.get('title'),
@@ -47,9 +47,7 @@ const voteMovieApi = (rating, movieId) => {
     }).catch(error => Promise.reject(error));
 }
 const getRatingApi = (movieId) => {
-    return http({
-        url: '/movies/rating',
-        method: 'GET',
+    return http.get('/movies/rating', {
         params: {
             movieId,
         }
@@ -60,9 +58,7 @@ const getRatingApi = (movieId) => {
 }
 
 const getAllActorsApi = () => {
-    return http({
-        url: '/actors/getAll',
-        method: 'GET',
+    return http.get('/actors/getAll', {
     }).then(result => {
         return result.data;
     }).catch(error => Promise.reject(error));

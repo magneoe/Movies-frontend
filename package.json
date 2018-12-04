@@ -4,7 +4,12 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "axios-mock-adapter": "^1.15.0",
     "history": "^4.7.2",
+    "jest": "^23.6.0",
+    "jest-cli": "^23.6.0",
+    "jest-mock-axios": "^2.1.11",
+    "moxios": "^0.4.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-modal": "^3.6.1",
