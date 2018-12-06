@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MovieDB component The display unit Should render successfully 1`] = `
+exports[`MovieDB component The display unit Should render successfully and loadMovie on componentDidMount 1`] = `
 ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <MovieDB

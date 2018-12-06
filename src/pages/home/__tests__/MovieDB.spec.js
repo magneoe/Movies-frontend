@@ -77,7 +77,7 @@ describe("MovieDB component", () => {
     });
 
     describe("The display unit", () => {
-        it("Should render successfully", () => {
+        it("Should render successfully and loadMovie on componentDidMount", () => {
             store = mockStore(initialState);
 
             let spy = sinon.spy();
