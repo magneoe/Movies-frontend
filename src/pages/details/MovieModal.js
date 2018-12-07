@@ -29,7 +29,7 @@ const customStyles = {
     }
 };
 class MovieModal extends Component {
-
+ 
     constructor(props) {
         super(props);
     }
@@ -195,14 +195,14 @@ const userRatingView = (currentRating, onVote, movie, user) => {
 export const mapStateToProps = (state) => {
     const {movieReducer, loginReducer} = state || {};
     const {requestConfig, movieData, loading, userRatings, comments} = movieReducer || {};
-    const {user} = loginReducer || {};
+    const {user} = loginReducer;
     return {
         requestConfig: requestConfig,
         movieData: movieData || {},
         loading: loading,
         userRatings: userRatings || [],
         comments: comments || [],
-        user: user || {},
+        user,
     }
 }
 
