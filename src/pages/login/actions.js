@@ -48,10 +48,15 @@ export const loginEpic = actions$ =>
         )),
         catchError(error => of(loginFailure(error)))
     );
+export const logoutEpic = actions$ => 
+            actions$.pipe(
+                ofType(LOGOUT),
+                mapTo(push('./loginpage'))
+            );
 
-
+ 
 export const loginReducer = (state = {}, action) => {
-    switch(action.type){
+    switch(action.type) { 
         case LOGIN:
             return {...state};
         case LOGIN_SUCCESS:

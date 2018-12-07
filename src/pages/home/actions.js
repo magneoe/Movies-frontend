@@ -1,9 +1,9 @@
 import { from, of} from 'rxjs';
-import { switchMap, mergeMap, map, delay, catchError, concat } from 'rxjs/operators';
+import { mergeMap, map, delay, catchError, concat } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 
 import { getMoviesApi, voteMovieApi, getRatingApi, getCommentsApi, postCommentApi } from '../../api/movieDB-lib';
-
+import {logout} from '../login/actions';
 export const LOAD_MOVIES = "MOVIES/LOAD_MOVIES";
 export const LOAD_MOVIES_SUCCESS = "MOVIES/LOAD_MOVIES_SUCCESS";
 export const LOAD_MOVIES_FAILURE = "MOVIES/LOAD_MOVIES_FAILURE";
@@ -132,21 +132,23 @@ export function loadRatingFailure(error) {
     }
 }
 
-function handleError(error) {
-    console.log(error);
+function handleError(error, actionOnFailed) {
     if (error && error.response) {
-        if (error.response.status >= 400 && error.response.status < 500) {
+        if(error.response.status === 401) {
+            return logout();
+        }
+        else if (error.response.status >= 400 && error.response.status < 500) {
             //Handle client errors
-            alert("Client error: " + error.response.statusText);
-            return "Client error";
+            alert("Client error" + error.response.status);
+            return actionOnFailed(error);
         }
         else if (error.response.status >= 500 && error.response.status < 600) {
             //Handle server errors
-            alert("Server error: " + error.response.statusText);
-            return "Server error";
+            alert("Server error: " + error.response.status);
+            return actionOnFailed(error);
         }
     }
-    return error;
+    return actionOnFailed(error); 
 }
 export const loadMoviesEpic = actions$ =>
     actions$.pipe(
@@ -154,7 +156,7 @@ export const loadMoviesEpic = actions$ =>
         delay(1000),
         mergeMap(action => from(getMoviesApi(action.page, action.size, action.sort, action.direction))),
         map(result => loadMoviesSuccess(result)),
-        catchError(error => of(loadMoviesFailure(handleError(error))))
+        catchError(error => of(handleError(error, loadMoviesFailure)))
     );
 
 export const voteEpic = actions$ =>
@@ -166,7 +168,7 @@ export const voteEpic = actions$ =>
                 concat(of(loadRatingSuccess({ rating: action.rating, movieId: action.movieId })))
             )
         ),
-        catchError(error => of(voteFailure(handleError(error))))
+        catchError(error => of(handleError(error, voteFailure)))
     );
 export const loadRatingEpic = actions$ =>
     actions$.pipe(
@@ -174,7 +176,7 @@ export const loadRatingEpic = actions$ =>
         delay(1000),
         mergeMap(action => from(getRatingApi(action.movieId))),
         map(result => loadRatingSuccess(result)),
-        catchError(error => of(loadRatingFailure(handleError(error))))
+        catchError(error => of(handleError(error, loadRatingFailure)))
     );
 export const loadCommentsEpic = actions$ =>
         actions$.pipe(
@@ -182,7 +184,7 @@ export const loadCommentsEpic = actions$ =>
             mergeMap(action => from(getCommentsApi(action.movieId, action.page,
                 action.size))),
             map(result => loadCommentsSuccess(result)),
-            catchError(error => of(loadCommentsFailure(handleError(error))))
+            catchError(error => of(handleError(error, loadCommentsFailure)))
         );
 
 export const postCommentEpic = actions$ =>
@@ -196,7 +198,7 @@ export const postCommentEpic = actions$ =>
                         ),
                     // switchMap(action => from(postCommentApi(action.formData, action.movieId))),
                     // map(result => postCommentSuccess(result)),
-                    catchError(error => of(postCommentFailure(handleError(error))))
+                    catchError(error => of(handleError(error, postCommentFailure)))
                 );
 
 

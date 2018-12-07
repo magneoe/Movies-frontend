@@ -12,6 +12,7 @@
     "jest": "^23.6.0",
     "jest-cli": "^23.6.0",
     "jest-mock-axios": "^2.1.11",
+    "jwt-decode": "^2.2.0",
     "moxios": "^0.4.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",

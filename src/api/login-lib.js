@@ -7,8 +7,8 @@ export const performLogin = (formData) => {
         },
         {
             headers: {
-                'Content-Type': 'text/plain'
-            }
-        
+                'Content-Type': 'text/plain',
+                'Accept': 'application/json'
+            } 
     }).then(result => { return result }).catch(error => Promise.reject(error)); 
 }
