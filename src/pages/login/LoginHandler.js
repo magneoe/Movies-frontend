@@ -6,6 +6,8 @@ import {login} from './actions';
 
 
 export class LoginHandler extends Component {
+    static ROUTE = "/loginpage";
+    
     constructor(props){
         super(props);
         this.state = {
