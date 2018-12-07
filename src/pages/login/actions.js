@@ -1,10 +1,10 @@
-import {from, of} from 'rxjs';
-import {mergeMap, map, mapTo, concat, catchError} from 'rxjs/operators';
-import {ofType} from 'redux-observable';
-import {push} from 'react-router-redux';
+import { from, of } from 'rxjs';
+import { mergeMap, map, mapTo, concat, catchError } from 'rxjs/operators';
+import { ofType } from 'redux-observable';
+import { push } from 'react-router-redux';
 
-import {performLogin} from '../../api/login-lib';
-import {SESSION_ID} from '../../api/httpConfig';
+import { performLogin } from '../../api/login-lib';
+import { SESSION_ID } from '../../api/httpConfig';
 
 
 export const LOGIN = "LOGIN_HANDLER/LOGIN";
@@ -32,7 +32,7 @@ export function loginFailure(errorMessage) {
         errorMessage,
     }
 }
-export function logout(){
+export function logout() {
     return {
         type: LOGOUT,
     }
@@ -48,33 +48,34 @@ export const loginEpic = actions$ =>
         )),
         catchError(error => of(loginFailure(error)))
     );
-export const logoutEpic = actions$ => 
-            actions$.pipe(
-                ofType(LOGOUT),
-                mapTo(push('./loginpage'))
-            );
+export const logoutEpic = actions$ =>
+    actions$.pipe(
+        ofType(LOGOUT),
+        mapTo(push('./loginpage'))
+    );
 
- 
+
 export const loginReducer = (state = {}, action) => {
-    switch(action.type) { 
+    switch (action.type) {
         case LOGIN:
-            return {...state};
+            return { ...state };
         case LOGIN_SUCCESS:
             let result = action.result;
-            if(result.status === 200)
+            if (result.status === 200) {
                 sessionStorage.setItem(SESSION_ID, result.headers.authorization);
-            return {
-                ...state,
-                user: {
-                    sessionId: SESSION_ID,
-                    date: new Date(),
-                }
-            };
+                return {
+                    ...state,
+                    user: {
+                        sessionId: SESSION_ID,
+                        date: new Date(),
+                    }
+                };
+            }
         case LOGIN_FAILURE:
-            return {...state};
+            return { ...state };
         case LOGOUT:
             let user = state.user;
-            if(user && user.sessionId)
+            if (user && user.sessionId)
                 sessionStorage.removeItem(user.sessionId);
             return {
                 ...state,

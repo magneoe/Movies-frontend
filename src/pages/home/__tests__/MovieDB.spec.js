@@ -1,7 +1,6 @@
 import React from 'react';
 
 import configureStore from 'redux-mock-store';
-import {Provider} from 'react-redux';
 
 import Adapter from 'enzyme-adapter-react-16';
 import {expect as expectChai} from 'chai';
@@ -9,7 +8,6 @@ import Enzyme, { shallow} from 'enzyme';
 import sinon from 'sinon';
 
 import ConnectedMovieDB, { mapStateToProps, MovieDB } from '../MovieDB';
-import ConnectedMovieModal from '../../details/MovieModal';
 
 let initialState; 
 // pass in any middleware if needed into //configureStore
