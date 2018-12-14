@@ -32,6 +32,9 @@ class MovieModal extends Component {
  
     constructor(props) {
         super(props);
+        this.state = {
+            currentPage: 0
+        };
     }
     componentDidMount(){
         Modal.setAppElement('#root');
@@ -71,7 +74,7 @@ class MovieModal extends Component {
         let formData = new FormData(form);
         const movie = this.getMovieById(this.props.movieId);
         this.props.actions.postComment(formData, movie.id, this.getPageInfo(movie.id).number);
-        //Clear field
+        //Clear fields
         document.getElementById("title").value = "";
         document.getElementById("comment").value = "";
     }
@@ -85,28 +88,39 @@ class MovieModal extends Component {
     onNext = (currentPage, totalPages) => {
         const {movieId} = this.props;
         if (currentPage + 1 < totalPages && movieId) {
-            this.props.actions.loadComments(movieId, currentPage + 1);
+            if(!this.props.comments.data.find(e => e.number === currentPage + 1))
+                this.props.actions.loadComments(movieId, currentPage + 1);
+            this.setState({currentPage: currentPage + 1});
         }
     }
     onPrev = (currentPage) => {
         const {movieId} = this.props;
         if (currentPage - 1 >= 0 && movieId) {
-            this.props.actions.loadComments(movieId, currentPage - 1);
+            if(!this.props.comments.data.find(e => e.number === currentPage - 1))
+                this.props.actions.loadComments(movieId, currentPage - 1);
+            this.setState({currentPage: currentPage - 1});
         }
     }
-    getPageInfo = (movieId) => {
-        const commentsForSelectedMovie = this.props.comments.find(entry => entry.movieId === movieId);
-        return (commentsForSelectedMovie || {}).data || { currentPage: 0, totalPages: 0, numberOfElements: 0, number: 0 };
+    getPageInfo = () => {
+        const commentArray = this.props.comments.data || [];
+        const commentsByPage = commentArray.find(e => e.number === this.state.currentPage);
+        return commentsByPage || { currentPage: 0, totalPages: 0, numberOfElements: 0, number: 0 };
+    }
+
+    close = () => {
+        this.setState({currentPage: 0});
+        this.props.closeModal();
     }
 
     render() {
-        const { modalIsOpen, movieId, closeModal } = this.props;
+        const { modalIsOpen, movieId } = this.props;
 
         const movie = this.getMovieById(movieId);
         const { genres, actors, year, posterUrl, duration, averageRating, createdDate, releaseDate, plot } = movie || {};
-        const commentEntry = this.props.comments.find(entry => entry.movieId === movieId) || {};
-        const commentData = commentEntry.data || {};
-        const commentList = commentData.content || [];
+        const comments = this.props.comments || {};
+        const commentData = comments.data || [];
+        const commentsByPage = commentData.find(e => e.number === this.state.currentPage);
+        const commentList = (commentsByPage || {}).content || [];
 
         const userRatings = this.props.userRatings || [];
         const currentRating = userRatings.find(userRating => userRating.movieId === movieId) || { rating: 0 };
@@ -137,7 +151,7 @@ class MovieModal extends Component {
                 >
                     <div className="headerContainer">
                         <h2 style={{ display: 'inline-flex' }}>{movie.title}</h2>
-                        <button className="closeButton" onClick={closeModal}>X</button>
+                        <button className="closeButton" onClick={this.close}>X</button>
                     </div>
                     <div className="container">
                         <div className="posterContainer">
@@ -166,7 +180,7 @@ class MovieModal extends Component {
                         <div className="commentList"> 
                             <CommentList commentList={commentList}/>
                         </div>
-                        <PageInfo onPrev={this.onPrev} onNext={this.onNext} currentPage={number} totalPages={totalPages} numberOfElements={numberOfElements} />
+                        <PageInfo onPrev={this.onPrev} onNext={this.onNext} currentPage={this.state.currentPage} totalPages={totalPages} numberOfElements={numberOfElements} />
                     </div>
                 </Modal>
             </div>
@@ -201,7 +215,7 @@ export const mapStateToProps = (state) => {
         movieData: movieData || {},
         loading: loading,
         userRatings: userRatings || [],
-        comments: comments || [],
+        comments: comments || {},
         user,
     }
 }

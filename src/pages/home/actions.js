@@ -136,7 +136,7 @@ function handleError(error, actionOnFailed) {
     if (error && error.response) {
         if(error.response.status === 401) {
             return logout();
-        }
+        } 
         else if (error.response.status >= 400 && error.response.status < 500) {
             //Handle client errors
             alert("Client error" + error.response.status);
@@ -231,24 +231,53 @@ export const movieReducer = (state = {}, action) => {
             }
 
         case LOAD_COMMENT_SUCCESS:
-            const result = action.result || {};
+/*             const result = action.result || {};
             const currentComments = state.comments || [];
-            let updatedCommentsTest = [];
+            let updatedComments = [];
 
-            const indexOfCurrentComments = currentComments.findIndex(entry => entry.movieId === result.movieId);
-            if (indexOfCurrentComments === -1) {
-                updatedCommentsTest = [...currentComments, action.result];
+            const indexOfCommentsByMovie = currentComments.findIndex(entry => entry.movieId === result.movieId);
+            if (indexOfCommentsByMovie === -1) {
+                updatedComments = [...currentComments, action.result];
             }
             else {
-                updatedCommentsTest = updateObjectInArray(currentComments,
-                    {index: indexOfCurrentComments, item: action.result});
+                updatedComments = updateObjectInArray(currentComments,
+                    {index: indexOfCommentsByMovie, item: action.result});
             }
 
             return {
                 ...state,
                 loading: false,
-                comments: updatedCommentsTest,
+                comments: updatedComments,
+            } */
+            const result = action.result || {};
+            const currentComments = state.comments || {};
+            const currentMovieId = currentComments.movieId;
+            let updatedComments = {...currentComments};
+
+            //Entry exists - merge pages
+            if(currentMovieId && currentMovieId === result.movieId)
+            {
+                if(!currentComments.data.find(e => e.number === result.data.number))
+                {
+                    updatedComments = {
+                        ...currentComments,
+                        data: insertItem(currentComments.data, {index: currentComments.data.length, item: result.data})
+                    }
+                }
             }
+            else {
+                updatedComments = {
+                    movieId: result.movieId,
+                    data: [{...result.data}]
+                }
+            }
+
+            return {
+                ...state,
+                loading: false,
+                comments: updatedComments,
+            }
+
         case VOTE_SUCCSESS:
             const currentMovieData = state.movieData || {};
             const currentMovieContent = currentMovieData.content || [];
